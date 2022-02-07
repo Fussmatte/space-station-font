@@ -1,10 +1,10 @@
 # space-station-font
 A Unicode font, in PNG and TTF format, based on the Commodore 64/VVVVVV font. Intended for use in Ved and versions of VVVVVV with Unicode support.
 
-The PNG file can be used with versions of VVVVVV with Unicode support. It can also be used with Pixel Font Converter! by YellowAfterlife (https://yal.cc/r/20/pixelfont/) in conjunction with the JSON file, which contains character map data and other font information. Note that the letters are in white.
+The `font.txt` file, which contains the character map, must accompany the PNG file in the graphics data directory for VVVVVV in order to properly display the font.
 
-The <code>font.txt</code> file, which contains the character map, must accompany the PNG file in the graphics data directory for VVVVVV in order to properly display the font.
+The `git.txt` file contains bitmap data for the font in plaintext, in case you need that.
 
-The <code>git.txt</code> file contains bitmap data for the font in plaintext, in case you need that. The included Python scripts will convert a paired PNG and <code>font.txt</code> to <code>git.txt</code> and vice versa. (Make sure the files and scripts are all in one directory, named the same as in the repo).
+The TTF file is intended for [Ved](https://tolp.nl/ved), but feel free to use it for whatever! It's licensed under the SIL Open Font License v1.1. See [LICENSE](LICENSE) for details.
 
-The TTF file is intended for Ved, but feel free to use it for whatever!
+Check out the [included Python scripts](/scripts) for converting stuff. (Make sure the png and txt are in the parent directory from the scripts.)
