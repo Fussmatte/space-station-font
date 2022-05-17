@@ -2,10 +2,11 @@ from __future__ import print_function
 import sys
 import fontforge
 from PIL import Image
-from textwrap import wrap
+#from textwrap import wrap
 
 # Original code by benob (https://github.com/benob/png_font_to_ttf)
 # Modified for Space Station by Reese Rivers (https://github.com/Fussmatte/space-station-font)
+# Thanks to Dav999 for writing the charsetraw split code!
 
 # For the font.png make sure the transparency is FIRST in the png's palette!
 # This should be visible in Aseprite at least
@@ -37,7 +38,16 @@ else:
 image = Image.open(imagefilename)
 charsetfile = open(charsetfilename,"r")
 charsetraw = charsetfile.read()
-charset = wrap(charsetraw,image.width // width)
+#charset = wrap(charsetraw,image.width // width,break_on_hyphens=False)
+
+charset = [""]
+col = 0
+for c in charsetraw:
+    charset[-1] += c
+    col += 1
+    if col >= image.width // width:
+        charset.append("")
+        col = 0
 
 factor = 10 # size factor so that coords are in range [16, 65536]
 
@@ -73,7 +83,7 @@ font.fontname   = fontName
 font.fullname   = fontFullName
 font.version    = fontVersion
 font.familyname = font.fullname
-with open("LICENSE", "r") as file:
+with open("../LICENSE", "r") as file:
     font.copyright = file.read()
 
 font.generate(output, flags=('opentype'))
