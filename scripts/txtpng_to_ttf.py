@@ -13,7 +13,7 @@ from PIL import Image
 
 fontName        = "SpaceStation"
 fontFullName    = "Space Station"
-fontVersion     = "3.3"
+fontVersion     = "3.4"
 
 output          = "../space-station.ttf"
 imagefilename   = "../font.png"
