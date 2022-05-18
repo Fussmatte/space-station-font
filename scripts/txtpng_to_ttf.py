@@ -13,7 +13,7 @@ from PIL import Image
 
 fontName        = "SpaceStation"
 fontFullName    = "Space Station"
-fontVersion     = "3.4"
+fontVersion     = "3.5"
 
 output          = "../space-station.ttf"
 imagefilename   = "../font.png"
@@ -38,7 +38,6 @@ else:
 image = Image.open(imagefilename)
 charsetfile = open(charsetfilename,"r")
 charsetraw = charsetfile.read()
-#charset = wrap(charsetraw,image.width // width,break_on_hyphens=False)
 
 charset = [""]
 col = 0
@@ -70,7 +69,7 @@ for j in range(image.height // height):
           for y in range(height):
               for x in range(width):
                   pixel = pixels[q * width + x, j * height + y]
-                  if pixel != 0: # if pixel is not transparent
+                  if pixel != (0,0,0,0): # if pixel is not transparent
                       pen.moveTo((x * factor, (height - y) * factor)) # draw a pixel
                       pen.lineTo(((x + 1) * factor, (height - y) * factor))
                       pen.lineTo(((x + 1) * factor, (height - y - 1) * factor))
