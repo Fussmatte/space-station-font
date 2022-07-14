@@ -8,9 +8,6 @@ from PIL import Image
 # Modified for Space Station by Reese Rivers (https://github.com/Fussmatte/space-station-font)
 # Thanks to Dav999 for writing the charsetraw split code!
 
-# For the font.png make sure the transparency is FIRST in the png's palette!
-# This should be visible in Aseprite at least
-
 fontName        = "SpaceStation"
 fontFullName    = "Space Station"
 fontVersion     = "3.6"
