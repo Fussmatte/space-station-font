@@ -1,6 +1,7 @@
 from __future__ import print_function
 import sys
 import fontforge
+import re
 from PIL import Image
 #from textwrap import wrap
 
@@ -10,13 +11,13 @@ from PIL import Image
 
 fontName        = "SpaceStation"
 fontFullName    = "Space Station"
-fontVersion     = "3.6"
+fontVersion     = "3.7"
 
 output          = "../space-station.ttf"
 imagefilename   = "../font.png"
 width           = 8
 height          = 8
-charsetfilename = "../font.txt"
+charsetfilename = "../font.fontmeta"
 
 # optional: provide own font info
 # fontforge -script pngtxt_to_ttf.py <output.ttf> <font.png> <font.txt> <width> <height> <fontName> <fontFullName> <fontVer>
@@ -32,9 +33,18 @@ if len(sys.argv) == 9:
 else:
     print("No font info provided, exporting for Space Station")
 
-image = Image.open(imagefilename)
-charsetfile = open(charsetfilename,"r")
-charsetraw = charsetfile.read()
+image = Image.open(imagefilename).convert('RGBA')
+fontmetafile = open(charsetfilename,"r")
+fontmetatext = fontmetafile.read()
+
+ranges = re.findall(r'<range start="(0[xX][0-9a-fA-F]+)" end="(0[xX][0-9a-fA-F]+)"\/>',fontmetatext)
+
+i = 0
+charsetraw = ""
+while i < len(ranges):
+    for j in range(int(ranges[i][0],0),int(ranges[i][-1],0)+1):
+        charsetraw = charsetraw + chr(j)
+    i=i+1
 
 charset = [""]
 col = 0
@@ -66,7 +76,7 @@ for j in range(image.height // height):
           for y in range(height):
               for x in range(width):
                   pixel = pixels[q * width + x, j * height + y]
-                  if pixel != (0,0,0,0): # if pixel is not transparent
+                  if pixel[3] != 0: #If alpha > 0
                       pen.moveTo((x * factor, (height - y) * factor)) # draw a pixel
                       pen.lineTo(((x + 1) * factor, (height - y) * factor))
                       pen.lineTo(((x + 1) * factor, (height - y - 1) * factor))

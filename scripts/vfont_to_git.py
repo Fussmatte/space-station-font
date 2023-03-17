@@ -1,4 +1,5 @@
 import PIL
+import re
 from PIL import Image
 
 xposition = 0
@@ -8,15 +9,24 @@ output = ""
 
 image = Image.open('../font.png' ).convert('RGBA')
 
-with open("../font.txt", encoding="utf-8") as file:
-    data = file.read()
-    data = data[:-1] # no newline
+with open("../font.fontmeta", encoding="utf-8") as file:
+    fontmeta = file.read()
+    ranges = re.findall(r'<range start="(0[xX][0-9a-fA-F]+)" end="(0[xX][0-9a-fA-F]+)"\/>',fontmeta)
+    print(ranges)
+
+    i = 0
+    data = ""
+    while i < len(ranges):
+        for j in range(int(ranges[i][0],0),int(ranges[i][-1],0)+1):
+            data = data + chr(j)
+        i=i+1
+
     for i in range(len(data)):
         output += data[i] + "\n"
         for y in range(8):
             for x in range(8):
                 pixel = image.getpixel(((xposition * 8) + x,(yposition * 8) + y))
-                if pixel == (255,255,255,255):
+                if pixel[3] != 0: #If alpha > 0
                     output += "0"
                 else:
                     output += "-"
