@@ -7,7 +7,12 @@ with open("../git.txt", encoding="utf-8") as file:			#Open git.txt to read only
     listtable = [] 							#Will contain all characters, each as its own sublist
     while line_i < len(data_lines):
         listtable.append([])
-        listtable[line_i//10].append(ord(data_lines[line_i][0])) 	#First entry in the sublist is the character's Unicode value as a number
+        char_line = data_lines[line_i].strip("\n")
+        if char_line.startswith("0x"):
+            thischarcode = int(char_line, 16)
+        else:
+            thischarcode = ord(char_line)
+        listtable[line_i//10].append(thischarcode) 			#First entry in the sublist is the character's Unicode value as a number
         for y in range(9):
             listtable[line_i//10].append(data_lines[line_i+y]) 		#Then add the character and its bitmap data lines as subsequent entries.
         line_i+=10 							#Go to next character

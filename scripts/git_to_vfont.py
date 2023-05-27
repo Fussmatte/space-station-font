@@ -17,7 +17,11 @@ with open("../git.txt", encoding="utf-8") as file:
     line_i = 0
     ranges = [[]]
     while line_i < len(data_lines):
-        thischarcode = ord(data_lines[line_i].strip("\n"))
+        char_line = data_lines[line_i].strip("\n")
+        if char_line.startswith("0x"):
+            thischarcode = int(char_line, 16)
+        else:
+            thischarcode = ord(char_line)
 
         if line_i >= 1: # this isn't the first character, so...
             if thischarcode != ranges[-1][-1] + 1:
