@@ -22,7 +22,11 @@ with open("../font.fontmeta", encoding="utf-8") as file:
         i=i+1
 
     for i in range(len(data)):
-        output += data[i] + "\n"
+        codepoint = ord(data[i])
+        if codepoint < 0x20:
+            output += hex(codepoint) + "\n"
+        else:
+            output += data[i] + "\n"
         for y in range(8):
             for x in range(8):
                 pixel = image.getpixel(((xposition * 8) + x,(yposition * 8) + y))
