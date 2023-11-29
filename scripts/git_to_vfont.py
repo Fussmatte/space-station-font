@@ -51,7 +51,8 @@ while i < len(ranges):
     output = output + ('        <range start="0x%02X" end="0x%02X"/>\n'%(ranges[i][0],ranges[i][len(ranges[i])-1]))
     i=i+1
 output = output + '    </chars>\n    <special>\n        <range start="0x00" end="0x1F" advance="6"/>\n    </special>\n    <fallback>buttons_8x8</fallback>\n</font_metadata>'
- 
+
+image = image.convert("P", palette=Image.ADAPTIVE, colors=2)
 image.save("../font.png")
 with open("../font.fontmeta", "w", encoding="utf-8") as file:
     file.write(output + "\n")
